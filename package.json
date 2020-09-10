@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "npm run start --prefix ../client",
+    "client": "npm run start --prefix ./client",
     "start": "node server.js",
     "dev": "concurrently \"npm run start\" \"npm run client\""
   },
