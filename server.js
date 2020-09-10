@@ -16,17 +16,27 @@ const CHANGE_CURRENT_VIDEO = "change_current_video";
 
 
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '/client/build')));
 
 
 
 // Listen on port 5000
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 
 app.get('/', (req, res) => {
-    res.send('<h1>Hello</h1>');
+    res.sendFile(path.join(__dirname + '/client/build'));
 });
+
+app.get('/api', function (req,res) {
+    res.set('Content-Type', 'application/json');
+    res.send('{"message":"Hellow from the custom server!"}');
+});
+
+ // All remaining requests return the React app, so it can handle routing.
+ app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  });
 
 
 
