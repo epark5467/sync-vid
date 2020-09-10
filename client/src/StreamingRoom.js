@@ -16,7 +16,7 @@ import { findDOMNode } from 'react-dom';
 
 
 const NEW_MESSAGE = 'new_message';
-const socket = io("http://localhost:5000", { transports: ['websocket'], upgrade: false });
+const socket = io({ transports: ['websocket'], upgrade: false });
 
 const StreamingRoom = (props) => {
     
@@ -210,7 +210,7 @@ const StreamingRoom = (props) => {
                     <ListItemText primary={item} />
                     
                     <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" onClick={removePlaylistItem.bind(null, idx)}>
+                        <IconButton edge="end" color="secondary" aria-label="delete" onClick={removePlaylistItem.bind(null, idx)}>
                             <Delete />
                         </IconButton>
                     </ListItemSecondaryAction>
@@ -227,10 +227,10 @@ const StreamingRoom = (props) => {
 
     const renderChat = () => {
         return receivedMsg.map(({sender, message}, i) => (
-            <div key={i}>
+            <ListItem className="message-item" key={i}>
                 <span className="sender" style={{ color: sender.color}}>{sender.username}</span>
                 <span className="message">{message}</span>
-            </div>
+            </ListItem>
         ));
     };
 
@@ -248,8 +248,8 @@ const StreamingRoom = (props) => {
         <div className ="root">
             <AppBar position="static">
                 <Toolbar className="app-header">
-                    <Link to={"/"} edge="start">YT Sync</Link>
-                    <span edge="end" color="inherit" >Hello! {username}</span>
+                    <Link className="header-home" to={"/"} edge="start">SyncVid</Link>
+                    <span className="header-username" edge="end" color="inherit" >Hello! {username}</span>
                 </Toolbar>
             </AppBar> 
             <Grid container className="room-container" justify="space-between" alignItems="stretch">
@@ -301,21 +301,21 @@ const StreamingRoom = (props) => {
                             <TabPanel value={tabValue} index={0} className="playlist-container">
                                 <Toolbar hidden={userRole !== "admin"} className="add-new-video">
                                     <input className="new-video-url" placeholder="url..." value={newURL} onChange={handleURLChange}/>
-                                    <IconButton color="default" onClick={handleURLInput}><AddBox /></IconButton>
+                                    <IconButton color="success" onClick={handleURLInput}><AddBox /></IconButton>
                                 </Toolbar>
-                                <span className="now-playing"> Now Playing: {videoProp.url} </span> 
+                                <span className="now-playing"> Now Playing <span className="currentUrl">{videoProp.url}</span> </span> 
                                 <List dense className="current-playlist">
                                     {renderPlayList()}
                                 </List>
                             </TabPanel>
                             <TabPanel value={tabValue} index={1} className="chat-container">
-                                <div className = "chat-message-list">
+                                <List dense className = "chat-message-list">
                                     {renderChat()}
-                                </div>
-                                <div className = "chat-user-input">
-                                    <TextField label="standard" value={newMsg} onChange = { handleMessageInput } />
+                                </List>
+                                <Toolbar className = "chat-user-input">
+                                    <TextField className="username-input"value={newMsg} onChange = { handleMessageInput } />
                                     <IconButton color="primary" onClick= {submitMessage}><Send /></IconButton>
-                                </div>
+                                </Toolbar>
                             </TabPanel>
                             <TabPanel value={tabValue} index={2} className="userlist-container">
                                 <div>

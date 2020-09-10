@@ -16,6 +16,18 @@
   justify-content: space-between;
   .app-header {
     justify-content: space-between;
+    background: rgb(67, 61, 158);
+    .header-home {
+      font-family: 'Segoe UI';
+      font-size: larger;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+
+    .header-username {
+      font-family: 'Roboto';
+    }
   }
 
   .room-container {
@@ -51,6 +63,7 @@
     .user-control {
       width: 30%;
       padding: 1rem;
+      font-family: 'Segoe UI';
       .user-control-container {
         height: 100%;
         display: flex;
@@ -59,35 +72,61 @@
         
         .user-control-content{
           height: 100%;
-          .add-new-video {
-            width: inherit;
-            padding: 0;
-            .new-video-url {
-              width: 100%;
-              padding: .5rem;
-              border-radius: .5rem;
+          .react-swipeable-view-container {
+            height: 100%;
+            .add-new-video {
+              width: inherit;
+              padding: 0;
+              .new-video-url {
+                width: 100%;
+                padding: .5rem;
+                border: none;
+                border-bottom: 2px solid lightsteelblue;
 
-              &:focus {
-                outline: none;
+                &:focus {
+                  outline: none;
+                }
               }
             }
-          }
-          .playlist-container {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-          }
-
-          .chat-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            .chat-message-list {
-
+            .playlist-container {
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              .now-playing {
+                font-family: 'Roboto';
+                font-size: .9rem;
+                .currentURl {
+                  color: slategray;
+                  padding: 1rem;
+                }
+              }
             }
-            .chat-user-input {
-              width: 100%;
+
+            .chat-container {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              height: 100%;
+              .MuiBox-root {
+                height: 100%;
+                .chat-message-list {
+                  height: 90%;
+                  .message-item {
+                    .message {
+                      padding: 0 1rem;
+                    }
+                  }
+                }
+                .chat-user-input {
+                  height: 10%;
+                  width: inherit;
+                  display: flex;
+                  justify-content: space-between;
+                  .username-input {
+                    width:100%;
+                  }
+                }  
+              }
             }
           }
         }
