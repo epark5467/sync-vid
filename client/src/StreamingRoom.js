@@ -16,9 +16,7 @@ import { findDOMNode } from 'react-dom';
 
 
 const NEW_MESSAGE = 'new_message';
-const socket = io("http://localhost:5000", { 
-                transports: ['websocket'], upgrade: false }
-);
+const socket = io({ transports: ['websocket'], upgrade: false });
 
 const StreamingRoom = (props) => {
     
