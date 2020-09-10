@@ -1,0 +1,54 @@
+
+
+.home-container {
+  text-align: center;
+  height: 100%;
+
+  .room-selection {
+    display: flex;
+    flex-direction: column;
+    padding: 5rem;
+  }
+}
+.root {
+  min-height: 105vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .app-header {
+    justify-content: space-between;
+  }
+
+  .room-container {
+    display: flex;
+    padding: 1rem 1rem 0rem 1rem;
+    .video-container {
+      width: 100%
+    }
+    .user-control {
+      margin-left: 1rem;
+      .user-control-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .chat-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .chat-message-list {
+
+          }
+          .chat-user-input {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  footer {
+    padding-top: 1rem;
+  }
+}
