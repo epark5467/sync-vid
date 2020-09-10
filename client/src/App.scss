@@ -1,5 +1,4 @@
 
-
 .home-container {
   text-align: center;
   height: 100%;
@@ -11,7 +10,7 @@
   }
 }
 .root {
-  min-height: 105vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -21,29 +20,78 @@
 
   .room-container {
     display: flex;
-    padding: 1rem 1rem 0rem 1rem;
     .video-container {
-      width: 100%
+      width: 70%;
+      padding: 1rem;
+      .video-wrapper {
+        background: black;
+      }
+
+      .video-seek-slider {
+        color: teal;
+        height: 5;
+
+        MuiSlider-thumb: {
+          height: 24;
+          width: 24;
+          background-color: white;
+        }
+      }
+
+      .common-toolbar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 1rem 0;
+        .volume-slider {
+          width: 20%;
+        }
+      }
     }
     .user-control {
-      margin-left: 1rem;
+      width: 30%;
+      padding: 1rem;
       .user-control-container {
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        .chat-container {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
+        
+        .user-control-content{
+          height: 100%;
+          .add-new-video {
+            width: inherit;
+            padding: 0;
+            .new-video-url {
+              width: 100%;
+              padding: .5rem;
+              border-radius: .5rem;
 
-          .chat-message-list {
-
+              &:focus {
+                outline: none;
+              }
+            }
           }
-          .chat-user-input {
-            width: 100%;
+          .playlist-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+          }
+
+          .chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .chat-message-list {
+
+            }
+            .chat-user-input {
+              width: 100%;
+            }
           }
         }
+        
       }
     }
   }
@@ -51,4 +99,18 @@
   footer {
     padding-top: 1rem;
   }
+}
+
+
+
+@media (max-width: 640px) {
+  .room-container {
+    display: flex;
+  .video-container {
+    width: 100%;
+  }
+  .user-control {
+    width: 100%;
+  }
+}
 }

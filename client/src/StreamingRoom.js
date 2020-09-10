@@ -16,7 +16,7 @@ import { findDOMNode } from 'react-dom';
 
 
 const NEW_MESSAGE = 'new_message';
-const socket = io({ transports: ['websocket'], upgrade: false });
+const socket = io("http://localhost:5000", { transports: ['websocket'], upgrade: false });
 
 const StreamingRoom = (props) => {
     
@@ -118,8 +118,7 @@ const StreamingRoom = (props) => {
             setNewURL("");
         } else {
             alert("this is not a valid link");
-        }    
-        
+        }
     };
     
     const handleURLChange = (event) => {
@@ -254,45 +253,38 @@ const StreamingRoom = (props) => {
                 </Toolbar>
             </AppBar> 
             <Grid container className="room-container" justify="space-between" alignItems="stretch">
-                <Grid item sm className="video-container">
-                    <ReactPlayer 
-                        ref = {videoRef}
-                        className="react-player"
-                        id="streaming-player"
-                        playing = {videoProp.playing}
-                        url={videoProp.url}
-                        duration={videoProp.duration}
-                        width="100%"
-                        height="80vh"
-                        volume= {videoProp.volume}
-                        playing={videoProp.playing} 
-                        onEnded = {playNextVideo}
-                        onProgress={handleProgress}
-                        onPause={handlePlayPause}
-                    />
-
-                    <div className="player-toolbar" hidden={userRole !== "admin"}>
-                        <Toolbar className="player-toolbar">
-                            <IconButton color="default" onClick={playNextVideo}><SkipNext /></IconButton>
-                            <IconButton color="default" onClick={handleClickFullScreen}><Fullscreen /></IconButton>
-                        </Toolbar>
-                        <div>
+                <Grid item className="video-container">
+                    <Grid>
+                        <Grid item className="video-wrapper">
+                            <ReactPlayer 
+                                ref = {videoRef}
+                                className="react-player"
+                                id="streaming-player"
+                                playing = {videoProp.playing}
+                                url={videoProp.url}
+                                duration={videoProp.duration}
+                                width="100%"
+                                height="70vh"
+                                volume= {videoProp.volume}
+                                playing={videoProp.playing} 
+                                onEnded = {playNextVideo}
+                                onProgress={handleProgress}
+                                onPause={handlePlayPause}
+                            />
+                        </Grid>
+                        <Grid item className="common-toolbar">
                             <VolumeUp />
-                            <Slider defaultValue={30} onChange={handleVolumeChange} 
-                                aria-labelledby="continuous-slider"/>
-                        </div>
-                        <div>
-                            <Slider value={videoProp.played*100} onChange={handleSeekChange}/>
-                        </div>
-                        <Paper>
-                            <Input placeholder="url..." value={newURL} onChange={handleURLChange} />
-                            <IconButton color="default" onClick={handleURLInput}><AddBox /></IconButton>
-                        </Paper>
-                    </div>
+                            <Slider className="volume-slider" defaultValue={30} onChange={handleVolumeChange} aria-labelledby="continuous-slider"/>
+                            <IconButton color="default" onClick={handleClickFullScreen}><Fullscreen /></IconButton>
+                        </Grid>
+                        <Grid item className="admin-toolbar" hidden={userRole !== "admin"}>
+                            <Slider className="video-seek-slider" value={videoProp.played*100} onChange={handleSeekChange}/>
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid item sm className="user-control">
-                    <Paper className="user-control-container">
-                        <AppBar position="static" color="default">
+                <Grid item className="user-control">
+                    <Paper className="user-control-container" elevation={1}>
+                        <AppBar position="static" color="default" elevation={1}>
                             <Tabs value={tabValue} onChange={handleTabChange}
                                 indicatorColor="primary" variant="fullWidth" aria-label="user-control-tabs">
                                 <Tab icon={<PlaylistPlay />} aria-label="playlist-container" {...a11yProps(0)}/>
@@ -304,8 +296,13 @@ const StreamingRoom = (props) => {
                             axis={viewTheme.direction === 'rtl' ? 'x-reverse' : 'x'}
                             index={tabValue}
                             onChangeIndex={handleChangeViewIndex}
+                            className="user-control-content"
                         >
                             <TabPanel value={tabValue} index={0} className="playlist-container">
+                                <Toolbar hidden={userRole !== "admin"} className="add-new-video">
+                                    <input className="new-video-url" placeholder="url..." value={newURL} onChange={handleURLChange}/>
+                                    <IconButton color="default" onClick={handleURLInput}><AddBox /></IconButton>
+                                </Toolbar>
                                 <span className="now-playing"> Now Playing: {videoProp.url} </span> 
                                 <List dense className="current-playlist">
                                     {renderPlayList()}
