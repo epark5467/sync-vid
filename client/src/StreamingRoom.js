@@ -301,7 +301,7 @@ const StreamingRoom = (props) => {
                             <TabPanel value={tabValue} index={0} className="playlist-container">
                                 <Toolbar hidden={userRole !== "admin"} className="add-new-video">
                                     <input className="new-video-url" placeholder="url..." value={newURL} onChange={handleURLChange}/>
-                                    <IconButton color="success" onClick={handleURLInput}><AddBox /></IconButton>
+                                    <IconButton color="default" onClick={handleURLInput}><AddBox /></IconButton>
                                 </Toolbar>
                                 <span className="now-playing"> Now Playing <span className="currentUrl">{videoProp.url}</span> </span> 
                                 <List dense className="current-playlist">

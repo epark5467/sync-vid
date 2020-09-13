@@ -35,7 +35,10 @@ app.get('/api', function (req,res) {
 
  // All remaining requests return the React app, so it can handle routing.
  app.get('/*', function(request, response) {
-    response.sendFile(path.resolve(__dirname, '/client/build'));
+    response.sendFile(path.join(__dirname, '/client/public/index.html'));
+    if (err) {
+        res.status(500).send(err);
+    }
   });
 
 
