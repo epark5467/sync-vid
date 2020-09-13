@@ -13,12 +13,14 @@ function Home() {
 
     return (
         <div className="home-container">
-            <h2>Youtube Sync</h2>
-            <span>Watch Youtube videos with your friends!</span>
-            <Divider />
+            <div className="home-header">
+               <h1>SyncVid</h1>
+                <span>Watch online videos with your friends!</span> 
+            </div>
             <div className="room-selection">
-                <span>Enter Channel</span>
-                <TextField className="room-name-input" value={roomName} onChange={handleRoomNameInput}></TextField>
+                <span className="room-selection-text">Enter Channel</span>
+                <TextField className="room-name-input" value={roomName} 
+                     onChange={handleRoomNameInput}></TextField>
                 <Link to={`r/${roomName}`} className="enter-room-button"><Button>Join Room</Button></Link>
             </div>
         </div>

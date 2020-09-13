@@ -173,7 +173,7 @@ io.on("connection", socket => {
         socket.username = newUsername;
         connections.find(item=> item.id === socketId).username = newUsername;
         updateUserlist(thisRoom);
-        updateUserProp(socketId);
+        updateUserProp({id: socketId, username: socket.username, color: socket.color, role: socket.role });
     });
 
     socket.on("change_role", role => {

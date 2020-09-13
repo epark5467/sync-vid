@@ -5,9 +5,9 @@ import Screenfull from 'screenfull';
 import SwipeableViews from 'react-swipeable-views';
 import { Link } from "react-router-dom";
 import { TextField, Paper, IconButton, AppBar, Slider,
-         Toolbar, Button, Grid, Tabs, Tab, Box,
+         Toolbar, Button, Grid, Tabs, Tab, Box, InputAdornment,
          Input, List, ListItem, ListItemText, ListItemSecondaryAction} from '@material-ui/core';
-import { Send, PlaylistPlay, ChatBubble, GitHub, Pause, PlayArrow,
+import { Send, PlaylistPlay, ChatBubble, GitHub, AccountCircle,
          SkipNext, AddBox, Delete, Check, VolumeUp, Fullscreen,
          People } from '@material-ui/icons';
 import { useTheme } from '@material-ui/core/styles';
@@ -53,7 +53,6 @@ const StreamingRoom = (props) => {
     });
 
     const [ userlist, setUserList ] = useState([]);
-    const [ openUserList, setOpenUserList] = useState(false);
 
 
     useEffect(() => {
@@ -96,7 +95,6 @@ const StreamingRoom = (props) => {
         socket.on("update_video", data => {
             setVideoProp({...videoProp,  url: data.url, played: data.played, playing: true });
             videoRef.current.seekTo(data.played);
-            console.log(data.played, data.played/100);
         });
 
         return () => {
@@ -168,13 +166,15 @@ const StreamingRoom = (props) => {
 
 
 
+    const messageInputKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            submitMessage();
+        }
+    };
 
     const handleMessageInput = (event) => {
         setNewMsg(event.target.value);
     };
-
-
-    
 
     const submitMessage = () => {
         let sender = { username: username, color: color};
@@ -191,17 +191,16 @@ const StreamingRoom = (props) => {
         setTabValue(index);
     };
 
-    const handleUserNameButton = () => {
-        setOpenUserList(!openUserList);
-    }
+    const userNameKeyPress = (event) => {
+        if(event.key === 'Enter') {
+            socket.emit("change_username", newUserName);
+        }
+    };
 
     const handleNewUserNameChange = (event) => {
         setNewUserName(event.target.value);
+        
     };
-    
-    const submitNewUserName = () => {
-        socket.emit("change_username", newUserName);
-    }
 
     const renderPlayList = () => {
         if(userRole === "admin") {
@@ -264,7 +263,7 @@ const StreamingRoom = (props) => {
                                 url={videoProp.url}
                                 duration={videoProp.duration}
                                 width="100%"
-                                height="70vh"
+                                height="75vh"
                                 volume= {videoProp.volume}
                                 playing={videoProp.playing} 
                                 onEnded = {playNextVideo}
@@ -313,29 +312,32 @@ const StreamingRoom = (props) => {
                                     {renderChat()}
                                 </List>
                                 <Toolbar className = "chat-user-input">
-                                    <TextField className="username-input"value={newMsg} onChange = { handleMessageInput } />
+                                    <TextField className="username-input"value={newMsg} 
+                                        onKeyDown={messageInputKeyDown} onChange = { handleMessageInput } />
                                     <IconButton color="primary" onClick= {submitMessage}><Send /></IconButton>
                                 </Toolbar>
                             </TabPanel>
                             <TabPanel value={tabValue} index={2} className="userlist-container">
-                                <div>
-                                    <div className="username-setting">
-                                        <span>Username:</span>
-                                        <Input value={newUserName} onChange={handleNewUserNameChange}/>
-                                        <IconButton color="primary" onClick={submitNewUserName}><Check /></IconButton>
-                                    </div>
-                                    <List dense className="connected-users">
-                                        {renderUserList()}
-                                    </List>
-                                    
+                                <div className="username-setting">
+                                    <Input className="username-input" value={newUserName} onChange={handleNewUserNameChange}
+                                        onKeyDown={userNameKeyPress} disableUnderline={true}
+                                        startAdornment = {
+                                            <InputAdornment position="start">
+                                                <AccountCircle />
+                                            </InputAdornment>
+                                        }
+                                    />
                                 </div>
+                                <List dense className="connected-users">
+                                    {renderUserList()}
+                                </List>
                             </TabPanel>
                         </SwipeableViews>
                     </Paper>
                 </Grid>
             </Grid>
             <footer>
-                <IconButton color="default"><GitHub /></IconButton>
+                
             </footer>
         </div>
     );
