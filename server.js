@@ -23,11 +23,11 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 // Listen on port 5000
 const PORT = process.env.PORT || 5000;
 
-
+/*
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build'));
 });
-
+*/
 app.get('/api', function (req,res) {
     res.set('Content-Type', 'application/json');
     res.send('{"message":"Hellow from the custom server!"}');
